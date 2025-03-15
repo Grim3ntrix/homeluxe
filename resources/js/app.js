@@ -1,14 +1,24 @@
+import './bootstrap';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
-import { ZiggyVue } from 'ziggy';
-import './bootstrap';
+import { ZiggyVue } from './../../vendor/tightenco/ziggy';
+
+async function resolvePageComponent(name) {
+    try {
+        return (await import(`./Pages/${name}.vue`)).default;
+    } catch (error) {
+        console.error(`Error loading page component: ${name}`, error);
+        throw error; 
+    }
+}
 
 createInertiaApp({
-    resolve: (name) => import(`./Pages/${name}.vue`), // Adjust path if your Vue pages are in a different folder
+    resolve: resolvePageComponent,
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .mount(el);
+        const app = createApp({ render: () => h(App, props) });
+
+        app.use(plugin)
+           .use(ZiggyVue)
+           .mount(el);
     },
 });
