@@ -3,13 +3,18 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { ZiggyVue } from './../../vendor/tightenco/ziggy';
 
+// Preload all .vue files inside Pages/** (including subdirectories)
+const pages = import.meta.glob('./Pages/**/*.vue');
+
 async function resolvePageComponent(name) {
-    try {
-        return (await import(`./Pages/${name}.vue`)).default;
-    } catch (error) {
-        console.error(`Error loading page component: ${name}`, error);
-        throw error; 
+    const path = `./Pages/${name.replace('.', '/')}.vue`;
+
+    if (!pages[path]) {
+        console.error(`Error loading page component: ${name} at ${path}`);
+        throw new Error(`Page component ${name} not found`);
     }
+
+    return pages[path]().then(module => module.default);
 }
 
 createInertiaApp({
