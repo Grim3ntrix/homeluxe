@@ -7,6 +7,6 @@
 </template>
 
 <script setup>
-import GuestNavigation from '@/Pages/Extras/Navigation/GuestNavigation.vue';
-import GuestFooter from '@/Pages/Extras/Footer/GuestFooter.vue'
+import GuestNavigation from '@/Components/Navigation/GuestNavigation.vue';
+import GuestFooter from '@/Components/Footer/GuestFooter.vue'
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import AthenticatedNavigation from '@/Pages/Extras/Navigation/AthenticatedNavigation.vue';
+import AthenticatedNavigation from '@/Components/Navigation/AthenticatedNavigation.vue';
 </script>
 
 <template>
